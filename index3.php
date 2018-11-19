@@ -29,11 +29,49 @@ $.get('api-v2.html', function(data, status){
 
         var url = "https://raw.githubusercontent.com/"+sub_url[0]+sub_url[1];
         // console.log(url);
-        $.get(url, function(data, status) {
-            // $item = $(data).filter('#raw-url');
-            console.log(data);
-            // https://  raw.githubusercontent.com /woocommerce/woocommerce/       master/tests/unit-tests/api/v2/system-status.php
-            // https:// github.com                 /woocommerce/woocommerce/ blob/ master/tests/unit-tests/api/v2/system-status.php
+        $.get(url, function(source_code, status) {
+            // console.log(source_code);
+            isPHPFile(name) ? writeFile(name, source_code) : createDirectory(name);
+            
+            function isPHPFile(str) {
+                return str.includes('.php');
+            }
+
+            
+
+            function createFile(name) {
+                $.post("create_file.php",
+                {
+                    name: name,
+                },
+                function(data, status){
+                    console.log("Data: " + data + "\nStatus: " + status);
+                });
+            }
+            
+
+            // writeFile(name, "https://raw.githubusercontent.com/woocommerce/woocommerce/master/tests/unit-tests/api/");
+
+            function writeFile(name, data) {
+                $.post("write_file.php",
+                {
+                    name: name,
+                    data: data,
+                },
+                function(data, status){
+                    console.log("Data: " + data + "\nStatus: " + status);
+                });
+            }
+
+            function createDirectory(name) {
+                $.post("create_directory.php",
+                {
+                    name: name,
+                },
+                function(data, status){
+                    console.log("Data: " + data + "\nStatus: " + status);
+                });
+            }
         });
     });
 });
