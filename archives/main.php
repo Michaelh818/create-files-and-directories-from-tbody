@@ -5,14 +5,14 @@
 
 
 <script> 
-var url = "https://github.com/woocommerce/woocommerce/tree/master/tests/unit-tests/api";  //"fuck-cross-origin.php";
+var url = "https://github.com/woocommerce/woocommerce/tree/master/tests/unit-tests/api";  //"cross-origin-bypass.php";
 go(url);
 
 
 function go(url) {
     var urlArr = url.split('/');
     var dir = urlArr[urlArr.length - 1].includes('.') ? urlArr[urlArr.length - 1] : "api";
-    $.post("fuck-cross-origin.php",
+    $.post("cross-origin-bypass.php",
     {
         url: url,
     },
@@ -22,7 +22,7 @@ function go(url) {
         $items.each(function(){
             var name = this.innerHTML;
             var str = this.href;
-            var res = str.split("http://localhost:8080/")[1];
+            var res = str.split("http://localhost:8081/")[1];
             // var url = "https://github.com/"+res;
             var sub_url = res.split("/blob");
 
